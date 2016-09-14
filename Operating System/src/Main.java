@@ -1,13 +1,20 @@
 import java.util.function.Consumer;
 
 public class Main {
+	
+	static Prompt prompt;
+	static Consumer<String> consumer;
+	
     public static void main(String[] args) {
-        Consumer<String> consumer = (String string) -> {
+    	
+    	prompt = new Prompt(consumer);
+    	InputProcessor input = InputProcessor.getInstance();
+    	
+         consumer = (String string) -> {
             System.out.println(string);
-            if (string.equals("exit"))
-                System.exit(0);
+            input.process(string);
         };
         
-        Prompt prompt = new Prompt(consumer);
+        prompt = new Prompt(consumer);
     }
 }

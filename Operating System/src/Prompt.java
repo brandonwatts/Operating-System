@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 public class Prompt {
     private JFrame frame;
     private JPanel panel;
-    private JTextArea textArea;
+    public static JTextArea textArea;
     private JTextField textField;
     
     public Prompt(Consumer<String> consumer) {
@@ -47,6 +47,19 @@ public class Prompt {
         frame.add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setResizable(false);
+        centerWindow(frame);
         frame.setVisible(true);
     }
+    
+    private void centerWindow(JFrame frame) {
+        Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = defaultToolkit.getScreenSize();
+        frame.setLocation(
+                (int)((screenSize.getWidth() / 2) - (frame.getWidth() / 2)),
+                (int)((screenSize.getHeight() / 2) - (frame.getHeight() / 2)));
+    }
+    
+    
+    
 }
