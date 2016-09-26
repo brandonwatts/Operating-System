@@ -14,8 +14,7 @@ public class Main{
             input.process(string);
         };
        
-        prompt = new Prompt(consumer);
-        
+        prompt = new Prompt(consumer);        
      
     }
 
