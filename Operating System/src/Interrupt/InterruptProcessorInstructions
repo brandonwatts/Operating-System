@@ -1,9 +1,9 @@
-  /*To use the InterruptProcessor class just paste this in your code and handle it in the TODO*/
-  
-  
-  InterruptProcessor interruptProcessor = new InterruptProcessor();
-        interruptProcessor.addMyEventListener(new InterruptProcessorListener() {
-          public void interruptOccurred(Interrupt interrupt) {
-            //TODO;
-          }
-        });
+/* To use the InterruptProcessor class just paste this in your code and handle it in the TODO */
+
+InterruptProcessor interruptProcessor = new InterruptProcessor();
+
+interruptProcessor.addMyEventListener(new InterruptProcessorListener() {
+	public void interruptOccurred(Interrupt interrupt) {
+		//TODO;
+	}
+});
