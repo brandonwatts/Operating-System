@@ -7,7 +7,6 @@ import java.util.LinkedList;
 public class ExecutionQueue {
 	
 	Deque<Process> executionQueue = new LinkedList<Process>();
-	Process.ProcessBuilder head, tail;
 	
 	public ExecutionQueue(Process... processes)
 	{
