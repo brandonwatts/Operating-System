@@ -1,14 +1,28 @@
+/**
+ * This Class will represent a Process. To instantiate it use the Builder design pattern and call the .build() method
+ */
+
 import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class Process {
 	
+	/** Holds the current state of the Process **/
 	private ProcessStates state;
+	
+	/** StringBuilder for the program code (should be a text file) **/
 	private StringBuilder programCode;
+	
+	/** Array to hold the state of the registers **/
 	private int[] registers;
+	
+	/** Stack to hold variables **/
 	private Stack<Object> stack;
+	
+	/** Heap to hold variables **/
 	private PriorityQueue<Object> heap;
 	
+	/** Builder Class **/
 	private Process(ProcessBuilder builder) {
 		
 		this.state = builder.state;
@@ -39,6 +53,7 @@ public class Process {
 		return heap;
 	}
 
+	/** Builder Class **/
 	public static class ProcessBuilder {
 		
 		private ProcessStates state;
@@ -47,25 +62,19 @@ public class Process {
 		private Stack<Object> stack;
 		private PriorityQueue<Object> heap;
 
-		public ProcessBuilder(ProcessStates state, StringBuilder programCode, int[] registers, Stack<Object> stack, PriorityQueue<Object> heap) {
+		/** Takes only state as a constructing parameter (Stack and Heap start empty) **/
+		public ProcessBuilder(ProcessStates state) {
 			this.state = state;
-			this.programCode = programCode;
-			this.registers = registers;
-			this.stack = stack;
-			this.heap = heap;
+			this.stack = new Stack<Object>();
+			this.heap = new PriorityQueue<Object>();
 		}
 
-		public ProcessBuilder state(ProcessStates state) {
-			this.state = state;
-			return this;
-		}
-
-		public ProcessBuilder programCode(StringBuilder programCode) {
+		public ProcessBuilder setprogramCode(StringBuilder programCode) {
 			this.programCode = programCode;
 			return this;
 		}
 
-		public ProcessBuilder registers(int[] registers) {
+		public ProcessBuilder setRegisters(int[] registers) {
 			this.registers = registers;
 			return this;
 		}
