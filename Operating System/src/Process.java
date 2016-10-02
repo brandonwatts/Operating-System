@@ -7,11 +7,14 @@ import java.util.Stack;
 
 public class Process {
 	
-	/** Holds the current state of the Process **/
-	private ProcessStates state;
+	/** Stores the parent operating system of this process **/
+	private OperatingSystem operatingSystem;
 	
-	/** StringBuilder for the program code (should be a text file) **/
-	private StringBuilder programCode;
+	/** Holds the current state of the Process **/
+	private ProcessState state;
+	
+	/** Program for the program code (loaded from a text file) **/
+	private Program programCode;
 	
 	/** Array to hold the state of the registers **/
 	private int[] registers;
@@ -24,7 +27,7 @@ public class Process {
 	
 	/** Builder Class **/
 	private Process(ProcessBuilder builder) {
-		
+		this.operatingSystem = builder.operatingSystem;
 		this.state = builder.state;
 		this.programCode = builder.programCode;
 		this.registers = builder.registers;
@@ -32,12 +35,16 @@ public class Process {
 		this.heap = builder.heap;
 		
 	}
-
-	public ProcessStates getState() {
+	
+	public OperatingSystem getOperatingSystem() {
+		return operatingSystem;
+	}
+	
+	public ProcessState getState() {
 		return state;
 	}
 
-	public StringBuilder getprogramCode() {
+	public Program getProgramCode() {
 		return programCode;
 	}
 
@@ -55,21 +62,27 @@ public class Process {
 
 	/** Builder Class **/
 	public static class ProcessBuilder {
-		
-		private ProcessStates state;
-		private StringBuilder programCode;
+		private OperatingSystem operatingSystem;
+		private ProcessState state;
+		private Program programCode;
 		private int[] registers;
 		private Stack<Object> stack;
 		private PriorityQueue<Object> heap;
 
-		/** Takes only state as a constructing parameter (Stack and Heap start empty) **/
-		public ProcessBuilder(ProcessStates state) {
-			this.state = state;
+		/** Takes only operating system as a constructing parameter **/
+		/** Stack and heap start empty **/
+		public ProcessBuilder(OperatingSystem operatingSystem) {
+			this.operatingSystem = operatingSystem;
 			this.stack = new Stack<Object>();
 			this.heap = new PriorityQueue<Object>();
 		}
+		
+		public ProcessBuilder setProcessState(ProcessState state) {
+			this.state = state;
+			return this;
+		}
 
-		public ProcessBuilder setprogramCode(StringBuilder programCode) {
+		public ProcessBuilder setProgramCode(Program programCode) {
 			this.programCode = programCode;
 			return this;
 		}
