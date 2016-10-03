@@ -85,7 +85,11 @@ public class OperatingSystem {
 			case "HELP":
 				prompt.append("The List of availible commands are: proc, mem, load, exe, reset, and exit" + "\n");
 				break;
-			
+				
+			case "TSKMGR":
+				TaskManagerInitializer taskManager = new TaskManagerInitializer();
+				break;
+				
 			default:
 				prompt.append("Error: Not a valid input" + "\n");
     	}

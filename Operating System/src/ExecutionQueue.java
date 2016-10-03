@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class ExecutionQueue {
 	
-	Deque<Process> executionQueue = new LinkedList<Process>();
+	static Deque<Process> executionQueue = new LinkedList<Process>();
 	
 	public ExecutionQueue(Process... processes)
 	{
@@ -30,5 +30,7 @@ public class ExecutionQueue {
 	{
 		executionQueue.remove();
 	}
+	
+	public static int getnumberofProcesses(){return executionQueue.size();}
 	
 }
