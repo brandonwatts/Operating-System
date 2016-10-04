@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.BorderFactory;
@@ -12,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -39,8 +42,7 @@ public class TaskManager {
 	 */
 	private void initialize(OperatingSystem os) {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1000, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 	
@@ -54,7 +56,7 @@ public class TaskManager {
 		JList list = new JList(processes);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
-		list.setVisibleRowCount(10);
+		list.setVisibleRowCount(6);
 		list.setFixedCellHeight(50);
 		list.setFixedCellWidth(100);
 		ListSelectionModel listSelectionModel = list.getSelectionModel();
@@ -122,7 +124,17 @@ public class TaskManager {
 		activeProcessesLabel.setBorder(paddingBorder);
 		statistics.add(activeProcessesLabel);
 
+		frame.pack();
+		centerWindow(frame);
 		frame.setVisible(true);
+	}
+	
+	private void centerWindow(JFrame frame) {
+        Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = defaultToolkit.getScreenSize();
+		int x = (int) ((screenSize.getWidth() / 2) - (frame.getWidth() / 2));
+		int y = (int) ((screenSize.getHeight() / 2) - (frame.getHeight() / 2)); 
+        frame.setLocation(x, y);
 	}
 	
 }
