@@ -6,19 +6,11 @@ import java.util.LinkedList;
 
 public class ExecutionQueue {
 	
-	static Deque<Process> executionQueue = new LinkedList<Process>();
+	Deque<Process> executionQueue;
 	
-	public ExecutionQueue(Process... processes)
+	public ExecutionQueue()
 	{
-		
-		if(processes.length==0)
-			throw new IllegalStateException();
-		
-		for(int i=0; i<processes.length;i++)
-		{
-			this.enQueue(processes[i]);
-		}
-		
+		executionQueue = new LinkedList<Process>();		
 	}
 	
 	public boolean enQueue(Process process)
@@ -31,6 +23,6 @@ public class ExecutionQueue {
 		executionQueue.remove();
 	}
 	
-	public static int getnumberofProcesses(){return executionQueue.size();}
+	public int getnumberofProcesses(){return executionQueue.size();}
 	
 }

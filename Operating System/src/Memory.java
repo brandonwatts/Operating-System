@@ -1,21 +1,21 @@
 public class Memory {
 	
-	private static int free = 0;
-	private static int used = 0;
+	private int free = 0;
+	private int used = 0;
 	
 	public Memory(int capacity) {
 		free = capacity;
 	}
 	
-	public static int getFreeMemory() {
+	public int getFreeMemory() {
 		return free;
 	}
 	
-	public static int getUsedMemory() {
+	public int getUsedMemory() {
 		return used;
 	}
 	
-	public static int getCapacity() {
+	public int getCapacity() {
 		return free + used;
 	}
 	

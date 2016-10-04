@@ -30,14 +30,14 @@ public class TaskManager {
 	/**
 	 * Create the application.
 	 */
-	public TaskManager() {
-		initialize();
+	public TaskManager(OperatingSystem os) {
+		initialize(os);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(OperatingSystem os) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1000, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,24 +110,19 @@ public class TaskManager {
 		frame.getContentPane().add(statistics, BorderLayout.EAST);
 
 		
-		JLabel freeMemoryLabel = new JLabel("Memory Left: " + Integer.toString(Memory.getFreeMemory()));
+		JLabel freeMemoryLabel = new JLabel("Memory Left: " + Integer.toString(os.getMemory().getFreeMemory()));
 		freeMemoryLabel.setBorder(paddingBorder);
 		statistics.add(freeMemoryLabel);
 		
-		JLabel usedMemoryLabel = new JLabel("Memory Used: " +Integer.toString(Memory.getUsedMemory()));
+		JLabel usedMemoryLabel = new JLabel("Memory Used: " +Integer.toString(os.getMemory().getUsedMemory()));
 		usedMemoryLabel.setBorder(paddingBorder);
 		statistics.add(usedMemoryLabel);
 		
-		JLabel activeProcessesLabel = new JLabel("Number of Active Processes: " + Integer.toString(ExecutionQueue.getnumberofProcesses()));
+		JLabel activeProcessesLabel = new JLabel("Number of Active Processes: " + Integer.toString(os.getExecutionQueue().getnumberofProcesses()));
 		activeProcessesLabel.setBorder(paddingBorder);
 		statistics.add(activeProcessesLabel);
 
 		frame.setVisible(true);
-	}
-	
-	public int populateFreeMemory()
-	{
-		return Memory.getFreeMemory();
 	}
 	
 }

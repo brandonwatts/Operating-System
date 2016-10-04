@@ -4,6 +4,7 @@ public class OperatingSystem {
 	private Clock clock;
 	private Memory memory;
 	private Prompt prompt;
+	private ExecutionQueue executionQueue;
 	
 	private Consumer<String> consumer = (String input) -> {
 		process(input);
@@ -14,6 +15,17 @@ public class OperatingSystem {
 		clock = new Clock();
 		memory = new Memory(256 * 1024);
 		prompt = new Prompt(consumer);
+		executionQueue = new ExecutionQueue();
+	}
+	
+	public ExecutionQueue getExecutionQueue()
+	{
+		return this.executionQueue;
+	}
+	
+	public Memory getMemory()
+	{
+		return this.memory;
 	}
 	
 	public void execute() {
@@ -87,7 +99,7 @@ public class OperatingSystem {
 				break;
 				
 			case "TSKMGR":
-				TaskManagerInitializer taskManager = new TaskManagerInitializer();
+				TaskManagerInitializer taskManager = new TaskManagerInitializer(this);
 				break;
 				
 			default:
