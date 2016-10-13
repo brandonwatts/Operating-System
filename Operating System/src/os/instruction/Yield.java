@@ -1,22 +1,19 @@
+package os.instruction;
+
+import os.OperatingSystem;
+import os.Process;
+import os.ProcessState;
+
 import java.util.Random;
 
 public class Yield implements Instruction {
-	
-	private static Random random = new Random();
-	
-	private int time;
-	
-	public Yield() {
-		this.time = random.nextInt(256);
-	}
-	
 	@Override
 	public void execute(Process process) {
-		// TODO
+		process.state = ProcessState.WAIT;
 	}
 	
 	@Override
 	public String toString() {
-		return "YIELD " + time;
+		return "YIELD";
 	}
 }

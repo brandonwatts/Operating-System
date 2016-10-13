@@ -1,10 +1,12 @@
+package os;
+
 public class Memory {
-	
 	private int free = 0;
 	private int used = 0;
 	
-	public Memory(int capacity) {
-		free = capacity;
+	public Memory() {
+		this.free = OperatingSystem.AMOUNT_OF_MEMORY;
+		this.used = 0;
 	}
 	
 	public int getFreeMemory() {
@@ -27,5 +29,10 @@ public class Memory {
 		}
 		
 		return false;
+	}
+	
+	public void freeMemory(int size) {
+		free += size;
+		used -= size;
 	}
 }

@@ -1,4 +1,4 @@
-package Interrupt;
+package os.interrupt;
 
 /** Used to generate custom listener **/
 public class Interrupt extends java.util.EventObject {

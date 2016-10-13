@@ -1,3 +1,5 @@
+package os;
+
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -33,14 +35,14 @@ public class TaskManager {
 	/**
 	 * Create the application.
 	 */
-	public TaskManager(OperatingSystem os) {
-		initialize(os);
+	public TaskManager() {
+		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(OperatingSystem os) {
+	private void initialize() {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -112,15 +114,15 @@ public class TaskManager {
 		frame.getContentPane().add(statistics, BorderLayout.EAST);
 
 		
-		JLabel freeMemoryLabel = new JLabel("Memory Left: " + Integer.toString(os.getMemory().getFreeMemory()));
+		JLabel freeMemoryLabel = new JLabel("Memory Left: " + Integer.toString(OperatingSystem.memory.getFreeMemory()));
 		freeMemoryLabel.setBorder(paddingBorder);
 		statistics.add(freeMemoryLabel);
 		
-		JLabel usedMemoryLabel = new JLabel("Memory Used: " +Integer.toString(os.getMemory().getUsedMemory()));
+		JLabel usedMemoryLabel = new JLabel("Memory Used: " +Integer.toString(OperatingSystem.memory.getUsedMemory()));
 		usedMemoryLabel.setBorder(paddingBorder);
 		statistics.add(usedMemoryLabel);
 		
-		JLabel activeProcessesLabel = new JLabel("Number of Active Processes: " + Integer.toString(os.getExecutionQueue().getnumberofProcesses()));
+		JLabel activeProcessesLabel = new JLabel("Number of Active Processes: " + Integer.toString(OperatingSystem.scheduler.getNumberOfProcesses()));
 		activeProcessesLabel.setBorder(paddingBorder);
 		statistics.add(activeProcessesLabel);
 

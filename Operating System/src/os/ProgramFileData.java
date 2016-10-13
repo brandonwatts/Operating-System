@@ -1,27 +1,30 @@
+package os;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Program {
-	
+import os.instruction.*;
+
+public class ProgramFileData {
 	public String name;
 	public int memory;
 	public ArrayList<Instruction> instructions;
 	
-	public Program() {
+	public ProgramFileData() {
 		this.name = "";
 		this.memory = 0;
 		this.instructions = new ArrayList<Instruction>();
 	}
 	
-	public Program(String name, int memory, ArrayList<Instruction> instructions) {
+	public ProgramFileData(String name, int memory, ArrayList<Instruction> instructions) {
 		this.name = name;
 		this.memory = memory;
 		this.instructions = instructions;
 	}
 	
-	public static Program readProgram(String filename) throws Exception {
+	public static ProgramFileData readProgramFile(String filename) throws Exception {
 		Scanner scanner;
 		
 		// try to open the file
@@ -44,7 +47,7 @@ public class Program {
 		
 		// read through the instructions line by line
 		while (scanner.hasNext()) {
-			String line = scanner.nextLine();
+			line = scanner.nextLine();
 			String[] tokens = line.trim().split("\\s+");
 			
 			if (tokens.length == 0) {
@@ -78,7 +81,9 @@ public class Program {
 			}
 		}
 		
-		return new Program(filename, memory, instructions);
+		instructions.add(new Exit());
+		
+		return new ProgramFileData(filename, memory, instructions);
 	}
 	
 	@Override

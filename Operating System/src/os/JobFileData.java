@@ -1,24 +1,25 @@
+package os;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Job {
-	
-	public ArrayList<Program> programs;
+public class JobFileData {
+	public ArrayList<ProgramFileData> programs;
 	public ArrayList<Integer> startTimes;
 	
-	public Job() {
-		this.programs = new ArrayList<Program>();
+	public JobFileData() {
+		this.programs = new ArrayList<ProgramFileData>();
 		this.startTimes = new ArrayList<Integer>();
 	}
 	
-	public Job(ArrayList<Program> programs, ArrayList<Integer> startTimes) {
+	public JobFileData(ArrayList<ProgramFileData> programs, ArrayList<Integer> startTimes) {
 		this.programs = programs;
 		this.startTimes = startTimes;
 	}
 	
-	public static Job readJob(String filename) throws Exception {
+	public static JobFileData readJobFile(String filename) throws Exception {
 		Scanner scanner;
 		
 		// try to open the file
@@ -28,7 +29,7 @@ public class Job {
 			throw new Exception("The file - " + filename + " - was not found.");
 		}
 		
-		ArrayList<Program> programs = new ArrayList<Program>();
+		ArrayList<ProgramFileData> programs = new ArrayList<ProgramFileData>();
 		ArrayList<Integer> startTimes = new ArrayList<Integer>();
 		
 		boolean end = false;
@@ -57,7 +58,7 @@ public class Job {
 					throw new Exception("In file - " + filename + " - " + "the number - " + tokens[2] + " - is bad.");
 				}
 				
-				programs.add(Program.readProgram(tokens[1]));
+				programs.add(ProgramFileData.readProgramFile(tokens[1]));
 			} else {
 				throw new Exception("In file - " + filename + " - the line - " + line + " - has to many arguments.");
 			}
@@ -74,7 +75,17 @@ public class Job {
 			}
 		}
 		
-		return new Job(programs, startTimes);
+		return new JobFileData(programs, startTimes);
+	}
+	
+	public ArrayList<Process> generateProcesses() {
+		ArrayList<Process> processes = new ArrayList<Process>();
+		
+		for (int i = 0; i < programs.size(); i++) {
+			processes.add(new Process(programs.get(i), startTimes.get(i)));
+		}
+		
+		return processes;
 	}
 	
 	@Override

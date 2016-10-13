@@ -1,3 +1,8 @@
+package os.instruction;
+
+import os.Process;
+import os.ProcessState;
+
 public class Calculate implements Instruction {
 	
 	private int time;
@@ -8,7 +13,7 @@ public class Calculate implements Instruction {
 	
 	@Override
 	public void execute(Process process) {
-		// TODO
+		process.state = ProcessState.READY;
 	}
 	
 	@Override

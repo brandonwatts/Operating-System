@@ -1,22 +1,18 @@
+package os.instruction;
+
+import os.Process;
+import os.ProcessState;
+
 import java.util.Random;
 
 public class InputOutput implements Instruction {
-	
-	private static Random random = new Random();
-	
-	private int time;
-	
-	public InputOutput() {
-		this.time = random.nextInt(256);
-	}
-	
 	@Override
 	public void execute(Process process) {
-		// TODO
+		process.state = ProcessState.WAIT;
 	}
 	
 	@Override
 	public String toString() {
-		return "IO " + time;
+		return "IO ";
 	}
 }

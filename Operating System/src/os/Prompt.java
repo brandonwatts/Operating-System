@@ -1,3 +1,5 @@
+package os;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -10,7 +12,7 @@ public class Prompt {
     private JTextArea textArea;
     private JTextField textField;
     
-    public Prompt(Consumer<String> consumer) {
+    public Prompt() {
         panel = new JPanel(new GridBagLayout());
         Font font = new Font("Consolas", Font.BOLD, 20);
         
@@ -20,7 +22,7 @@ public class Prompt {
                 String string = textField.getText();
                 textArea.append(string + "\n");
                 textField.setText("");
-                consumer.accept(string);
+                OperatingSystem.process(string);
             }
         });
         textField.setFont(font);

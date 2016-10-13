@@ -1,5 +1,11 @@
+package os;
+
 public class Clock {
-	private int clockCycle = 0;
+	public int clockCycle;
+	
+	public Clock() {
+		this.clockCycle = 0;
+	}
 	
 	public int getClock() {
 		return clockCycle;

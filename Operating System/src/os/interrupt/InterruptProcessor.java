@@ -1,4 +1,5 @@
-package Interrupt;
+package os.interrupt;
+
 import javax.swing.event.EventListenerList;
 
 /** Class that handles the interrupts as they are generated **/

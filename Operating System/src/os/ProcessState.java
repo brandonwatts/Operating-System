@@ -1,3 +1,5 @@
+package os;
+
 /** Enumeration of the process states for easier readability **/
 public enum ProcessState {
 	NEW,   // The program or process is being created or loaded (but not yet in memory).

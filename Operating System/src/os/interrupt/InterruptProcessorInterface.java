@@ -1,4 +1,4 @@
-package Interrupt;
+package os.interrupt;
 
 import java.util.EventObject;
 
