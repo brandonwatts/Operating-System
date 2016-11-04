@@ -1,7 +1,6 @@
 package os.instruction;
 
-import os.Process;
-import os.ProcessState;
+import os.OperatingSystem;
 
 public class Calculate implements Instruction {
 	
@@ -12,8 +11,11 @@ public class Calculate implements Instruction {
 	}
 	
 	@Override
-	public void execute(Process process) {
-		process.state = ProcessState.READY;
+	public void execute() {
+		System.out.println("left = " + time + " will become " + (time - 1));
+		if (time-- <= 0) {
+			OperatingSystem.cpu.registers[OperatingSystem.INSTRUCTION_REGISTER]++;
+		}
 	}
 	
 	@Override

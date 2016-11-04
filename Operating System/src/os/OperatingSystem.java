@@ -3,17 +3,28 @@ package os;
 import java.util.ArrayList;
 
 public class OperatingSystem {
-	public static final int AMOUNT_OF_MEMORY = 256 * 1024;
+	public static final int MEMORY_SIZE = 256 * 1024;
+	public static final int PAGE_SIZE = 4 * 1024;
+	
 	public static final int NUMBER_OF_REGISTERS = 4;
 	public static final int INSTRUCTION_REGISTER = 0;
+	public static final int PROC_BASE_REGISTER = 1;
+	public static final int PROC_LIMIT_REGISTER = 2;
+	public static final int PROCESS_ID_REGISTER = 3;
+	
+	public static final int QUANTUM = 10;
 	
 	public static Clock clock;
+	public static CPU cpu;
+	public static Dispatcher dispatcher;
 	public static Memory memory;
 	public static Prompt prompt;
 	public static Scheduler scheduler;
 	
 	public static void initialize() {
 		clock = new Clock();
+		cpu = new CPU();
+		dispatcher = new Dispatcher();
 		memory = new Memory();
 		prompt = new Prompt();
 		scheduler = new Scheduler();
@@ -21,7 +32,10 @@ public class OperatingSystem {
 	
 	public static void execute() {
 		scheduler.execute();
+		cpu.execute();
 		clock.execute();
+		
+		System.out.println(cpu.registers[0]);
 	}
 	
 	public static void process(String input) {
@@ -97,6 +111,7 @@ public class OperatingSystem {
 				throw new Exception("Incorrect use of exe.");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			prompt.append(e.getMessage() + "\n");
 		}
 	}
@@ -133,8 +148,8 @@ public class OperatingSystem {
 			
 			prompt.append("Files were successfully read in.\n");
 			
-			ArrayList<Process> processes = job.generateProcesses();
-			for (Process process : processes) {
+			ArrayList<ProcessData> processes = job.generateProcesses();
+			for (ProcessData process : processes) {
 				scheduler.insertPCB(process);
 			}
 		} catch (Exception e) {

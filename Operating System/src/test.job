@@ -1,2 +1,2 @@
-LOAD test.program 32
+LOAD test.program 0
 EXE

@@ -78,11 +78,11 @@ public class JobFileData {
 		return new JobFileData(programs, startTimes);
 	}
 	
-	public ArrayList<Process> generateProcesses() {
-		ArrayList<Process> processes = new ArrayList<Process>();
+	public ArrayList<ProcessData> generateProcesses() {
+		ArrayList<ProcessData> processes = new ArrayList<ProcessData>();
 		
 		for (int i = 0; i < programs.size(); i++) {
-			processes.add(new Process(programs.get(i), startTimes.get(i)));
+			processes.add(new ProcessData(programs.get(i), startTimes.get(i)));
 		}
 		
 		return processes;
