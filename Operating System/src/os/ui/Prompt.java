@@ -1,4 +1,6 @@
-package os;
+package os.ui;
+
+import os.OperatingSystem;
 
 import java.awt.*;
 import java.awt.event.*;

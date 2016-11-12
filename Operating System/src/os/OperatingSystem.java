@@ -1,5 +1,8 @@
 package os;
 
+import os.ui.Prompt;
+import os.ui.TaskManager;
+
 import java.util.ArrayList;
 
 public class OperatingSystem {
@@ -20,7 +23,8 @@ public class OperatingSystem {
 	public static Memory memory;
 	public static Prompt prompt;
 	public static Scheduler scheduler;
-	
+	public static TaskManager taskManager;
+
 	public static void initialize() {
 		clock = new Clock();
 		cpu = new CPU();
@@ -28,13 +32,13 @@ public class OperatingSystem {
 		memory = new Memory();
 		prompt = new Prompt();
 		scheduler = new Scheduler();
+		taskManager = new TaskManager();
 	}
 	
 	public static void execute() {
 		scheduler.execute();
 		cpu.execute();
 		clock.execute();
-		
 		System.out.println(cpu.registers[0]);
 	}
 	
@@ -75,7 +79,7 @@ public class OperatingSystem {
 				break;
 				
 			case "TSKMGR":
-				TaskManagerInitializer taskManager = new TaskManagerInitializer();
+				taskManager.setVisible(true);
 				break;
 				
 			default:
@@ -119,7 +123,7 @@ public class OperatingSystem {
 	private static void load(String[] arguments) {
 		try {
 			JobFileData job = null;
-			
+
 			// load in a job file
 			if (arguments.length == 2) {
 				String filename = arguments[1];
