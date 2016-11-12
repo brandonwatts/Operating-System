@@ -1,5 +1,8 @@
 package os;
 
+import os.ui.ProcessTableModel;
+import os.ui.TaskManager;
+
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -42,6 +45,7 @@ public class Scheduler {
 					}
 				}
 			}
+			removeFromModel(data);
 		}
 		
 		newQueue.removeAll(addedProcesses);
@@ -70,6 +74,7 @@ public class Scheduler {
 		}
 		
 		newQueue.add(i, data);
+		addToModel(data);
 	}
 	
 	public void remove(Process process) {
@@ -79,7 +84,8 @@ public class Scheduler {
 	public int getNumberOfProcesses() {
 		return newQueue.size() + readyQueue.size();
 	}
-	
+
+
 	public Process getProcessByID(int id) {
 		for (Process process : readyQueue) {
 			if (process.registers[OperatingSystem.PROCESS_ID_REGISTER] == id) {
@@ -88,5 +94,17 @@ public class Scheduler {
 		}
 		
 		return null;
+	}
+
+	public void removeFromModel(ProcessData data)
+	{
+		ProcessTableModel model = (ProcessTableModel) OperatingSystem.taskManager.getTable().getModel();
+		model.removeProcessData(data);
+	}
+
+	public void addToModel(ProcessData data)
+	{
+		ProcessTableModel model = (ProcessTableModel) OperatingSystem.taskManager.getTable().getModel();
+		model.addProcessData(data);
 	}
 }
