@@ -19,12 +19,17 @@ public class Process {
         this.name = name;
     }
 
+    public int getMemoryUseage(){return memoryUseage;}
+
     // Name of the process
     public String name;
+
+    private int memoryUseage;
 
     public Process(ProcessData data, int identifier) {
         this.registers = new int[OperatingSystem.NUMBER_OF_REGISTERS];
         this.name = data.name;
+        this.memoryUseage = data.memory;
 
         if (!OperatingSystem.memory.requestMemory(this, data.memory)) {
             this.state = null;

@@ -13,8 +13,8 @@ public class Scheduler {
 	private int identifier = 1;
 	
 	public Scheduler() {
-		this.newQueue = new ArrayList<ProcessData>();
-		this.readyQueue = new ArrayList<Process>();
+		this.newQueue = new ArrayList<>();
+		this.readyQueue = new ArrayList<>();
 	}
 	
 	public void execute() {
@@ -22,7 +22,7 @@ public class Scheduler {
 	}
 	
 	private void updateNewQueue() {
-		ArrayList<ProcessData> addedProcesses = new ArrayList<ProcessData>();
+		ArrayList<ProcessData> addedProcesses = new ArrayList<>();
 		
 		for (ProcessData data : newQueue) {
 			if (data.startTime <= OperatingSystem.clock.clockCycle) {
@@ -31,10 +31,11 @@ public class Scheduler {
 				if (process.state == null) {
 					break;
 				}
-				
+
+				OperatingSystem.taskManager.addToModel(process);
 				readyQueue.add(process);
 				addedProcesses.add(data);
-				
+
 				identifier++;
 				
 				while (getProcessByID(identifier) != null) {
@@ -45,7 +46,6 @@ public class Scheduler {
 					}
 				}
 			}
-			removeFromModel(data);
 		}
 		
 		newQueue.removeAll(addedProcesses);
@@ -74,7 +74,6 @@ public class Scheduler {
 		}
 		
 		newQueue.add(i, data);
-		addToModel(data);
 	}
 	
 	public void remove(Process process) {
@@ -84,7 +83,6 @@ public class Scheduler {
 	public int getNumberOfProcesses() {
 		return newQueue.size() + readyQueue.size();
 	}
-
 
 	public Process getProcessByID(int id) {
 		for (Process process : readyQueue) {
@@ -96,15 +94,8 @@ public class Scheduler {
 		return null;
 	}
 
-	public void removeFromModel(ProcessData data)
-	{
-		ProcessTableModel model = (ProcessTableModel) OperatingSystem.taskManager.getTable().getModel();
-		model.removeProcessData(data);
-	}
 
-	public void addToModel(ProcessData data)
-	{
-		ProcessTableModel model = (ProcessTableModel) OperatingSystem.taskManager.getTable().getModel();
-		model.addProcessData(data);
-	}
+
+
+
 }

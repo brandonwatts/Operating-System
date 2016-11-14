@@ -1,19 +1,21 @@
 package os.ui;
 
-import os.ProcessData;
+import os.OperatingSystem;
+import os.Process;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ProcessTableModel extends AbstractTableModel {
 
     private final String[] columnNames = {"Process", "Memory Useage"};
-    public List<ProcessData> processList;
+    public List<Process> processList;
+    public int numberProcesses ;
 
     public ProcessTableModel() {
         processList = new ArrayList<>();
+        numberProcesses = 0;
     }
 
     @Override
@@ -33,23 +35,25 @@ public class ProcessTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        ProcessData processData = processList.get(rowIndex);
+        Process process = processList.get(rowIndex);
         switch (columnIndex) {
             case (0):
-                return processData.name;
+                return process.getName();
             case (1):
-                return processData.memory;
+                return process.getMemoryUseage();
         }
         return null;
     }
 
-    public void addProcessData(final ProcessData contact) {
-        processList.add(contact);
+    public void addProcessData(final Process process) {
+        processList.add(process);
+        OperatingSystem.taskManager.getNumberOfProcesses().setText(Integer.toString(++numberProcesses));
         fireTableDataChanged();
     }
 
-    public void removeProcessData(final ProcessData processData) {
-        processList.remove(processData);
+    public void removeProcessData(final Process process) {
+        processList.remove(process);
+        OperatingSystem.taskManager.getNumberOfProcesses().setText(Integer.toString(--numberProcesses));
         fireTableDataChanged();
     }
 

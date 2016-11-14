@@ -10,6 +10,7 @@ public class Exit implements Instruction {
 		Process process = OperatingSystem.scheduler.getProcessByID(id);
 		OperatingSystem.memory.freeMemory(process);
 		OperatingSystem.scheduler.remove(process);
+		OperatingSystem.taskManager.removeFromModel(process);
 		OperatingSystem.cpu.registers[OperatingSystem.PROCESS_ID_REGISTER] = -1;
 	}
 }
