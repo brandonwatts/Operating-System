@@ -12,7 +12,8 @@ public class Calculate implements Instruction {
 	
 	@Override
 	public void execute() {
-		System.out.println("left = " + time + " will become " + (time - 1));
+		System.out.println(this.toString());
+		
 		if (time-- <= 0) {
 			OperatingSystem.cpu.registers[OperatingSystem.INSTRUCTION_REGISTER]++;
 		}

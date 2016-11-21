@@ -20,10 +20,23 @@ public class CPU {
 		if (interruptQueue.isEmpty()) {
 			if (registers[OperatingSystem.PROCESS_ID_REGISTER] >= 0) {
 				int address = registers[OperatingSystem.INSTRUCTION_REGISTER];
-				((Instruction) OperatingSystem.memory.memory[address]).execute();
+				((Instruction) OperatingSystem.memory.read(address)).execute();
 			}
 		} else {
 			interruptQueue.remove(0).interrupt();
 		}
+	}
+	
+	@Override
+	public String toString() {
+        String string = "";
+
+        string += "CPU Information\n";
+        string += "registers[0] = " + registers[0] + "\n";
+        string += "registers[1] = " + registers[1] + "\n";
+        string += "registers[2] = " + registers[2] + "\n";
+        string += "registers[3] = " + registers[3] + "\n";
+
+        return string;
 	}
 }

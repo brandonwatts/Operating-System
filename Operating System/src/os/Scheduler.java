@@ -7,14 +7,16 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Scheduler {
-	private ArrayList<ProcessData> newQueue;
-	private ArrayList<Process> readyQueue;
+	public ArrayList<ProcessData> newQueue;
+	public ArrayList<Process> readyQueue;
+	public ArrayList<Process> ioQueue;
 	
 	private int identifier = 1;
 	
 	public Scheduler() {
 		this.newQueue = new ArrayList<>();
 		this.readyQueue = new ArrayList<>();
+		this.ioQueue = new ArrayList<>();
 	}
 	
 	public void execute() {
@@ -28,13 +30,19 @@ public class Scheduler {
 			if (data.startTime <= OperatingSystem.clock.clockCycle) {
 				Process process = new Process(data, identifier);
 				
-				if (process.state == null) {
-					break;
-				}
-
 				OperatingSystem.taskManager.addToModel(process);
 				readyQueue.add(process);
 				addedProcesses.add(data);
+				
+				int[] backup = OperatingSystem.cpu.registers;
+				OperatingSystem.cpu.registers = process.registers;
+				
+				for (int i = 0; i < data.instructions.size(); i++) {
+					int index = i + process.registers[OperatingSystem.PROC_BASE_REGISTER];
+					OperatingSystem.memory.write(index, data.instructions.get(i));
+				}
+				
+				OperatingSystem.cpu.registers = backup;
 
 				identifier++;
 				
@@ -51,9 +59,7 @@ public class Scheduler {
 		newQueue.removeAll(addedProcesses);
 	}
 	
-	public Process next() {
-		System.out.println("CAlled - " + readyQueue.size());
-		
+	public Process nextReady() {
 		if (readyQueue.isEmpty()) {
 			return null;
 		}
@@ -63,7 +69,19 @@ public class Scheduler {
 		return process;
 	}
 	
+	public Process nextIO() {
+		if (ioQueue.isEmpty()) {
+			return null;
+		}
+		
+		return this.ioQueue.remove(0);
+	}
+	
 	public void insertPCB(ProcessData data) {
+		if (data.memory > OperatingSystem.MEMORY_SIZE) {
+			return;
+		}
+		
 		int i = 0;
 		
 		while (i < newQueue.size()) {
@@ -91,11 +109,12 @@ public class Scheduler {
 			}
 		}
 		
+		for (Process process : ioQueue) {
+			if (process.registers[OperatingSystem.PROCESS_ID_REGISTER] == id) {
+				return process;
+			}
+		}
+		
 		return null;
 	}
-
-
-
-
-
 }

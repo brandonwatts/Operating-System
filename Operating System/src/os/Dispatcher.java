@@ -11,8 +11,12 @@ public class Dispatcher {
 			}
 		}
 		
-		for (int i = 0; i < OperatingSystem.NUMBER_OF_REGISTERS; i++) {
-			OperatingSystem.cpu.registers[i] = process.registers[i];
+		if (process != null) {
+			for (int i = 0; i < OperatingSystem.NUMBER_OF_REGISTERS; i++) {
+				OperatingSystem.cpu.registers[i] = process.registers[i];
+			}
+		} else {
+			OperatingSystem.cpu.registers[OperatingSystem.PROCESS_ID_REGISTER] = -1;
 		}
 	}
 }

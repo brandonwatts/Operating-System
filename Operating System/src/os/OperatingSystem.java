@@ -7,8 +7,8 @@ import os.ui.TaskManager;
 import java.util.ArrayList;
 
 public class OperatingSystem {
-
-    public static final int MEMORY_SIZE = 256 * 1024;
+	// must be divisible by the page size
+    public static final int MEMORY_SIZE = 12 * 1024;
     public static final int PAGE_SIZE = 4 * 1024;
 
     public static final int NUMBER_OF_REGISTERS = 4;
@@ -16,16 +16,20 @@ public class OperatingSystem {
     public static final int PROC_BASE_REGISTER = 1;
     public static final int PROC_LIMIT_REGISTER = 2;
     public static final int PROCESS_ID_REGISTER = 3;
+	
     public static final int NUMBER_OF_SAVED_COMMANDS = 15;
 
     public static final int QUANTUM = 10;
-
+	
     public static Clock clock;
     public static CPU cpu;
     public static Dispatcher dispatcher;
     public static Memory memory;
-    public static Prompt prompt;
     public static Scheduler scheduler;
+	public static IODevice device;
+	public static HardDrive hardDrive;
+	
+    public static Prompt prompt;
     public static TaskManager taskManager;
     private static CommandQueue<String> commandQueue;
 
@@ -34,8 +38,11 @@ public class OperatingSystem {
         cpu = new CPU();
         dispatcher = new Dispatcher();
         memory = new Memory();
-        prompt = new Prompt();
         scheduler = new Scheduler();
+		device = new IODevice();
+		hardDrive = new HardDrive();
+		
+        prompt = new Prompt();
         taskManager = new TaskManager();
         commandQueue = new CommandQueue<>(NUMBER_OF_SAVED_COMMANDS);
     }
@@ -48,7 +55,13 @@ public class OperatingSystem {
         scheduler.execute();
         cpu.execute();
         clock.execute();
+		device.execute();
+		
         System.out.println(cpu.registers[0]);
+        System.out.println(cpu.registers[1]);
+        System.out.println(cpu.registers[2]);
+        System.out.println(cpu.registers[3]);
+		System.out.println();
     }
 
     public static void process(String input) {

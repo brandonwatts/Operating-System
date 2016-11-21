@@ -55,7 +55,7 @@ public class ProgramFileData {
 			} else if (tokens.length == 1) {
 				switch (tokens[0]) {
 					case "IO":
-						instructions.add(new InputOutput());
+						instructions.add(new IO());
 						break;
 					
 					case "YIELD":
