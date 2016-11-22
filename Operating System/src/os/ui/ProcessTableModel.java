@@ -11,7 +11,7 @@ public class ProcessTableModel extends AbstractTableModel {
 
     private final String[] columnNames = {"Process", "Memory Useage","Register 1","Register 2","Register 3","Register 4"};
     public List<Process> processList;
-    public int numberProcesses ;
+    public int numberProcesses;
 
     public ProcessTableModel() {
         processList = new ArrayList<>();

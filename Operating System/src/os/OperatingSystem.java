@@ -15,8 +15,6 @@ public class OperatingSystem {
     public static final int PROC_BASE_REGISTER = 1;
     public static final int PROC_LIMIT_REGISTER = 2;
     public static final int PROCESS_ID_REGISTER = 3;
-	
-    public static final int NUMBER_OF_SAVED_COMMANDS = 15;
 
     public static final int QUANTUM = 10;
 	
@@ -81,7 +79,7 @@ public class OperatingSystem {
                 break;
 
             case "MEM":
-                //TODO
+                mem();
                 break;
 
             case "LOAD":
@@ -144,6 +142,24 @@ public class OperatingSystem {
             e.printStackTrace();
             prompt.append(e.getMessage() + "\n");
         }
+    }
+
+    private static void mem(){
+        String usedMemory = Integer.toString(memory.getUsedMemory());
+        String freeMemory = Integer.toString(memory.getFreeMemory());
+        String numProcesses = Integer.toString(OperatingSystem.scheduler.getNumberOfProcesses());
+        String loadedProcesses = Integer.toString(OperatingSystem.scheduler.newQueue.size());
+        String activeProcesses = Integer.toString(OperatingSystem.scheduler.readyQueue.size());
+        StringBuilder memoryStats = new StringBuilder();
+
+        memoryStats.append("Memory Information\n");
+        memoryStats.append("Used Memory: " + usedMemory + "\n" );
+        memoryStats.append("Free Memory: " + freeMemory + "\n"  );
+        memoryStats.append("Number of Processes: " + numProcesses + "\n"  );
+        memoryStats.append("Number of Loaded Processes: " + loadedProcesses + "\n" );
+        memoryStats.append("Number of Running Processes: " + activeProcesses + "\n" );
+
+        prompt.append(memoryStats.toString());
     }
 
     private static void load(String[] arguments) {
