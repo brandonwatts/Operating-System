@@ -1,6 +1,7 @@
 package os.instruction;
 
 import os.OperatingSystem;
+import os.Tasks;
 
 public class Out implements Instruction {
 	@Override
@@ -9,6 +10,7 @@ public class Out implements Instruction {
 		String string = OperatingSystem.scheduler.getProcessByID(id).toString();
 		OperatingSystem.prompt.append(string + OperatingSystem.cpu.toString());
 		OperatingSystem.cpu.registers[OperatingSystem.INSTRUCTION_REGISTER]++;
+		Tasks.updateTaskManager();
 	}
 	
 	@Override

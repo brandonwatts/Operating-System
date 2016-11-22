@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProcessTableModel extends AbstractTableModel {
 
-    private final String[] columnNames = {"Process", "Memory Useage"};
+    private final String[] columnNames = {"Process", "Memory Useage","Register 1","Register 2","Register 3","Register 4"};
     public List<Process> processList;
     public int numberProcesses ;
 
@@ -41,6 +41,14 @@ public class ProcessTableModel extends AbstractTableModel {
                 return process.getName();
             case (1):
                 return process.getMemoryUseage();
+            case (2):
+                return process.registers[0];
+            case (3):
+                return process.registers[1];
+            case (4):
+                return process.registers[2];
+            case(5):
+                return process.registers[3];
         }
         return null;
     }

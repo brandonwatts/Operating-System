@@ -3,6 +3,7 @@ package os.instruction;
 import os.OperatingSystem;
 import os.Process;
 import os.ProcessState;
+import os.Tasks;
 
 public class IO implements Instruction {
 	@Override
@@ -14,15 +15,14 @@ public class IO implements Instruction {
 		
 		process.state = ProcessState.WAIT;
 		OperatingSystem.cpu.registers[OperatingSystem.INSTRUCTION_REGISTER]++;
-		
-		for (int i = 0; i < OperatingSystem.NUMBER_OF_REGISTERS; i++) {
-			process.registers[i] = OperatingSystem.cpu.registers[i];
-		}
+
+		System.arraycopy(OperatingSystem.cpu.registers,0,process.registers,0,OperatingSystem.NUMBER_OF_REGISTERS);
 		
 		OperatingSystem.cpu.registers[OperatingSystem.PROCESS_ID_REGISTER] = -1;
 		
 		OperatingSystem.scheduler.readyQueue.remove(process);
 		OperatingSystem.scheduler.ioQueue.add(process);
+		Tasks.updateTaskManager();
 	}
 	
 	@Override

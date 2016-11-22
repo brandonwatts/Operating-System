@@ -31,6 +31,7 @@ public class Scheduler {
 				Process process = new Process(data, identifier);
 				
 				OperatingSystem.taskManager.addToModel(process);
+				Tasks.refreshStats();
 				readyQueue.add(process);
 				addedProcesses.add(data);
 				
