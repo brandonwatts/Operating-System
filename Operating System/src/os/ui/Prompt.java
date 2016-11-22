@@ -92,7 +92,7 @@ public class Prompt {
             public void keyPressed(final KeyEvent e) {
                 int keyPressed = e.getKeyCode();
                 if (keyPressed == KeyEvent.VK_UP) {
-                    queuePosition++;
+                    queuePosition--;
                     if (!OperatingSystem.getCommandQueue().isEmpty()) {
                         String command = (String) OperatingSystem.getCommandQueue().get(Math.abs(queuePosition) % OperatingSystem.getCommandQueue().size());
                         OperatingSystem.prompt.writeCommand(command.trim());
@@ -100,7 +100,7 @@ public class Prompt {
                 }
                 if (keyPressed == KeyEvent.VK_DOWN) {
                     if (!OperatingSystem.getCommandQueue().isEmpty()) {
-                        queuePosition--;
+                        queuePosition++;
                         String command = (String) OperatingSystem.getCommandQueue().get(Math.abs(queuePosition) % OperatingSystem.getCommandQueue().size());
                         OperatingSystem.prompt.writeCommand(command.trim());
                     }
@@ -116,6 +116,7 @@ public class Prompt {
             output.append(string + "\n");
             commandLine.setText("");
             OperatingSystem.process(string);
+            queuePosition = OperatingSystem.getCommandQueue().size();
         });
 
         return commandLine;

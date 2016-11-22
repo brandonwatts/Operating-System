@@ -1,6 +1,5 @@
 package os;
 
-import os.ui.CommandQueue;
 import os.ui.Prompt;
 import os.ui.TaskManager;
 
@@ -31,7 +30,7 @@ public class OperatingSystem {
 	
     public static Prompt prompt;
     public static TaskManager taskManager;
-    private static CommandQueue<String> commandQueue;
+    private static ArrayList<String> commandQueue;
 
     public static void initialize() {
         clock = new Clock();
@@ -44,10 +43,10 @@ public class OperatingSystem {
 		
         prompt = new Prompt();
         taskManager = new TaskManager();
-        commandQueue = new CommandQueue<>(NUMBER_OF_SAVED_COMMANDS);
+        commandQueue = new ArrayList<>();
     }
 
-    public static CommandQueue getCommandQueue() {
+    public static ArrayList<String> getCommandQueue() {
         return commandQueue;
     }
 
