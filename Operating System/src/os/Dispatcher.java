@@ -16,6 +16,7 @@ public class Dispatcher {
 				OperatingSystem.cpu.registers[i] = process.registers[i];
 			}
 		} else {
+			System.out.println("DISPATCH ON NULL");
 			OperatingSystem.cpu.registers[OperatingSystem.PROCESS_ID_REGISTER] = -1;
 		}
 	}

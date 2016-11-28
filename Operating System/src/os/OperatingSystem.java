@@ -53,12 +53,6 @@ public class OperatingSystem {
         cpu.execute();
         clock.execute();
 		device.execute();
-		
-        System.out.println(cpu.registers[0]);
-        System.out.println(cpu.registers[1]);
-        System.out.println(cpu.registers[2]);
-        System.out.println(cpu.registers[3]);
-		System.out.println();
     }
 
     public static void process(String input) {

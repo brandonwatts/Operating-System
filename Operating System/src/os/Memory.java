@@ -30,19 +30,20 @@ public class Memory {
 			return this.memory[address];
 		} else {
 			if (base <= address && address < limit) {
-				if (table[page].owner.getID() == process.getID()) {
+				if (table[page].owner == null || table[page].free) {
+					OperatingSystem.hardDrive.readFrom(new Request(pageStart, pageEnd, id));
 					return this.memory[address];
+				} else if (table[page].owner.getID() == process.getID()) {
+					return memory[address];
 				} else {
 					Process owner = this.table[page].owner;
+					int ownerID = owner.registers[OperatingSystem.PROCESS_ID_REGISTER];
+					OperatingSystem.dispatcher.load(owner);
+					OperatingSystem.hardDrive.writeTo(new Request(pageStart, pageEnd, ownerID));
 					
 					this.table[page].owner = process;
 					this.table[page].free = false;
-					
-					if (owner != null) {
-						int ownerID = owner.registers[OperatingSystem.PROCESS_ID_REGISTER];
-						OperatingSystem.hardDrive.writeTo(new Request(pageStart, pageEnd, ownerID));
-					}
-					
+					OperatingSystem.dispatcher.load(process);
 					OperatingSystem.hardDrive.readFrom(new Request(pageStart, pageEnd, id));
 					return this.memory[address];
 				}
@@ -80,15 +81,13 @@ public class Memory {
 					return true;
 				} else {
 					Process owner = this.table[page].owner;
+					int ownerID = owner.registers[OperatingSystem.PROCESS_ID_REGISTER];
+					OperatingSystem.dispatcher.load(owner);
+					OperatingSystem.hardDrive.writeTo(new Request(pageStart, pageEnd, ownerID));
 					
 					this.table[page].owner = process;
 					this.table[page].free = false;
-					
-					if (owner != null) {
-						int ownerID = owner.registers[OperatingSystem.PROCESS_ID_REGISTER];
-						OperatingSystem.hardDrive.writeTo(new Request(pageStart, pageEnd, ownerID));
-					}
-					
+					OperatingSystem.dispatcher.load(process);
 					OperatingSystem.hardDrive.readFrom(new Request(pageStart, pageEnd, id));
 					this.memory[address] = data;
 					return true;

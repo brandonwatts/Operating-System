@@ -13,9 +13,7 @@ public class Request {
 	
 	@Override
 	public int hashCode() {
-		return 2 * startAddress
-			+ 3 * endAddress
-			+ 5 * processID;
+		return startAddress + processID;
 	}
 	
 	@Override

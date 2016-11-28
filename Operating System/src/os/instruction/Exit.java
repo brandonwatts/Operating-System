@@ -12,8 +12,10 @@ public class Exit implements Instruction {
 		OperatingSystem.memory.freeMemory(process);
 		OperatingSystem.hardDrive.freeMemory(id);
 		OperatingSystem.scheduler.remove(process);
+		OperatingSystem.cpu.registers[OperatingSystem.PROCESS_ID_REGISTER] = -1;
+		
 		Tasks.refreshStats();
 		OperatingSystem.taskManager.removeFromModel(process);
-		OperatingSystem.cpu.registers[OperatingSystem.PROCESS_ID_REGISTER] = -1;
+		
 	}
 }

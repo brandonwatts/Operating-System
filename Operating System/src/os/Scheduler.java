@@ -25,24 +25,21 @@ public class Scheduler {
         for (ProcessData data : newQueue) {
             if (data.startTime <= OperatingSystem.clock.clockCycle) {
                 Process process = new Process(data, identifier);
-
+				
                 OperatingSystem.taskManager.addToModel(process);
                 Tasks.refreshStats();
                 readyQueue.add(process);
                 addedProcesses.add(data);
-
-                int[] backup = OperatingSystem.cpu.registers;
-                OperatingSystem.cpu.registers = process.registers;
-
+				
+				OperatingSystem.dispatcher.load(process);
+				
                 for (int i = 0; i < data.instructions.size(); i++) {
                     int index = i + process.registers[OperatingSystem.PROC_BASE_REGISTER];
                     OperatingSystem.memory.write(index, data.instructions.get(i));
                 }
-
-                OperatingSystem.cpu.registers = backup;
-
+				
                 identifier++;
-
+				
                 while (getProcessByID(identifier) != null) {
                     identifier++;
 
