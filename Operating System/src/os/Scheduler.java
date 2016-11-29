@@ -31,12 +31,19 @@ public class Scheduler {
                 readyQueue.add(process);
                 addedProcesses.add(data);
 				
-				OperatingSystem.dispatcher.load(process);
+				OperatingSystem.dispatcher.load(process, ProcessState.READY);
 				
                 for (int i = 0; i < data.instructions.size(); i++) {
                     int index = i + process.registers[OperatingSystem.PROC_BASE_REGISTER];
                     OperatingSystem.memory.write(index, data.instructions.get(i));
                 }
+				
+				int base = process.registers[OperatingSystem.PROC_BASE_POINTER];
+				int limit = process.registers[OperatingSystem.PROC_LIMIT_REGISTER];
+				
+				for (int i = base; i < limit; i++) {
+					OperatingSystem.memory.write(i, null);
+				}
 				
                 identifier++;
 				

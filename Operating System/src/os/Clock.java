@@ -17,8 +17,6 @@ public class Clock implements Interrupter {
 	
 	@Override
 	public void interrupt() {
-		System.out.println("Clock Interrupt");
-		
-		OperatingSystem.dispatcher.load(OperatingSystem.scheduler.nextReady());
+		OperatingSystem.dispatcher.load(OperatingSystem.scheduler.nextReady(), ProcessState.READY);
 	}
 }

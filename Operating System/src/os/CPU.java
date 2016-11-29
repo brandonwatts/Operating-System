@@ -32,10 +32,9 @@ public class CPU {
         String string = "";
 
         string += "CPU Information\n";
-        string += "registers[0] = " + registers[0] + "\n";
-        string += "registers[1] = " + registers[1] + "\n";
-        string += "registers[2] = " + registers[2] + "\n";
-        string += "registers[3] = " + registers[3] + "\n";
+		for (int i = 0; i < OperatingSystem.NUMBER_OF_REGISTERS; i++) {
+			string += "registers[" + i + "] = " + registers[i] + "\n";
+		}
 
         return string;
 	}

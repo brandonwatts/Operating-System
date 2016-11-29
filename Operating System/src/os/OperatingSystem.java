@@ -7,15 +7,17 @@ import java.util.ArrayList;
 
 public class OperatingSystem {
 	// must be divisible by the page size
-    public static final int MEMORY_SIZE = 12 * 1024;
+    public static final int MEMORY_SIZE = 256 * 1024;
     public static final int PAGE_SIZE = 4 * 1024;
 
-    public static final int NUMBER_OF_REGISTERS = 4;
+    public static final int NUMBER_OF_REGISTERS = 6;
     public static final int INSTRUCTION_REGISTER = 0;
     public static final int PROC_BASE_REGISTER = 1;
     public static final int PROC_LIMIT_REGISTER = 2;
     public static final int PROCESS_ID_REGISTER = 3;
-
+	public static final int PROC_BASE_POINTER = 4;
+	public static final int PROC_DATA_POINTER = 5;
+	
     public static final int QUANTUM = 10;
 	
     public static Clock clock;
@@ -69,7 +71,7 @@ public class OperatingSystem {
 
         switch (tokens[0].toUpperCase()) {
             case "PROC":
-                //TODO
+                proc();
                 break;
 
             case "MEM":
@@ -85,7 +87,7 @@ public class OperatingSystem {
                 break;
 
             case "RESET":
-                prompt.output(null);
+                reset();
                 break;
 
             case "EXIT":
@@ -104,6 +106,40 @@ public class OperatingSystem {
                 prompt.append("Error: Not a valid input" + "\n");
         }
     }
+	
+	private static void reset() {
+		prompt.output(null);
+		
+		for (Process process : scheduler.readyQueue) {
+			OperatingSystem.taskManager.refreshStatistics();
+			OperatingSystem.taskManager.removeFromModel(process);
+		}
+		
+		for (Process process : scheduler.ioQueue) {
+			OperatingSystem.taskManager.refreshStatistics();
+			OperatingSystem.taskManager.removeFromModel(process);
+		}
+		
+		clock = new Clock();
+		cpu = new CPU();
+		dispatcher = new Dispatcher();
+		memory = new Memory();
+		scheduler = new Scheduler();
+		device = new IODevice();
+		hardDrive = new HardDrive();
+	}
+	
+	private static void proc() {
+		prompt.append(cpu.toString() + "\n");
+		
+		for (Process process : scheduler.readyQueue) {
+			prompt.append(process.toString() + "\n");
+		}
+		
+		for (Process process : scheduler.ioQueue) {
+			prompt.append(process.toString() + "\n");
+		}
+	}
 
     private static void exe(String[] arguments) {
         try {
@@ -138,7 +174,7 @@ public class OperatingSystem {
         }
     }
 
-    private static void mem(){
+    private static void mem() {
         String usedMemory = Integer.toString(memory.getUsedMemory());
         String freeMemory = Integer.toString(memory.getFreeMemory());
         String numProcesses = Integer.toString(OperatingSystem.scheduler.getNumberOfProcesses());

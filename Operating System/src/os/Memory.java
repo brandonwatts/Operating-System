@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Memory {
-	Object[] memory = new Object[OperatingSystem.MEMORY_SIZE];
-	Page[] table = new Page[OperatingSystem.MEMORY_SIZE / OperatingSystem.PAGE_SIZE];
+	public Object[] memory = new Object[OperatingSystem.MEMORY_SIZE];
+	public Page[] table = new Page[OperatingSystem.MEMORY_SIZE / OperatingSystem.PAGE_SIZE];
 	
 	public Memory() {
 		for (int i = 0; i < table.length; i++) {
@@ -38,12 +38,12 @@ public class Memory {
 				} else {
 					Process owner = this.table[page].owner;
 					int ownerID = owner.registers[OperatingSystem.PROCESS_ID_REGISTER];
-					OperatingSystem.dispatcher.load(owner);
+					OperatingSystem.dispatcher.load(owner, ProcessState.READY);
 					OperatingSystem.hardDrive.writeTo(new Request(pageStart, pageEnd, ownerID));
 					
 					this.table[page].owner = process;
 					this.table[page].free = false;
-					OperatingSystem.dispatcher.load(process);
+					OperatingSystem.dispatcher.load(process, ProcessState.READY);
 					OperatingSystem.hardDrive.readFrom(new Request(pageStart, pageEnd, id));
 					return this.memory[address];
 				}
@@ -82,12 +82,12 @@ public class Memory {
 				} else {
 					Process owner = this.table[page].owner;
 					int ownerID = owner.registers[OperatingSystem.PROCESS_ID_REGISTER];
-					OperatingSystem.dispatcher.load(owner);
+					OperatingSystem.dispatcher.load(owner, ProcessState.READY);
 					OperatingSystem.hardDrive.writeTo(new Request(pageStart, pageEnd, ownerID));
 					
 					this.table[page].owner = process;
 					this.table[page].free = false;
-					OperatingSystem.dispatcher.load(process);
+					OperatingSystem.dispatcher.load(process, ProcessState.READY);
 					OperatingSystem.hardDrive.readFrom(new Request(pageStart, pageEnd, id));
 					this.memory[address] = data;
 					return true;
@@ -99,7 +99,7 @@ public class Memory {
 		}
 	}
 	
-	private int getPage(int address) {
+	public int getPage(int address) {
 		return address / OperatingSystem.PAGE_SIZE;
 	}
 	

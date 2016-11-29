@@ -12,16 +12,12 @@ public class IO implements Instruction {
 		
 		int id = OperatingSystem.cpu.registers[OperatingSystem.PROCESS_ID_REGISTER];
 		Process process = OperatingSystem.scheduler.getProcessByID(id);
-		
-		process.state = ProcessState.WAIT;
 		OperatingSystem.cpu.registers[OperatingSystem.INSTRUCTION_REGISTER]++;
-
-		System.arraycopy(OperatingSystem.cpu.registers,0,process.registers,0,OperatingSystem.NUMBER_OF_REGISTERS);
-		
-		OperatingSystem.cpu.registers[OperatingSystem.PROCESS_ID_REGISTER] = -1;
+		OperatingSystem.dispatcher.load(null, ProcessState.WAIT);
 		
 		OperatingSystem.scheduler.readyQueue.remove(process);
 		OperatingSystem.scheduler.ioQueue.add(process);
+		
 		TaskManager.updateTaskManager();
 	}
 	

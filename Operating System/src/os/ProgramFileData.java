@@ -36,6 +36,7 @@ public class ProgramFileData {
 		
 		int memory = 0;
 		ArrayList<Instruction> instructions = new ArrayList<Instruction>();
+		instructions.add(new Exit());
 		
 		// read the amount of memory for the first line
 		String line = scanner.nextLine();
@@ -45,9 +46,47 @@ public class ProgramFileData {
 			throw new Exception("In file - " + filename + " - the number - " + line + " - is bad.");
 		}
 		
+		boolean bfmode = false;
+		
 		// read through the instructions line by line
 		while (scanner.hasNext()) {
 			line = scanner.nextLine();
+			
+			if (line.equals("#")) {
+				bfmode = !bfmode;
+			}
+			
+			if (bfmode || line.startsWith("$")) {
+				for (int i = 0; i < line.length(); i++) {
+					switch (line.charAt(i)) {
+						case '.':
+							instructions.add(new Print());
+							break;
+						case '+':
+							instructions.add(new IncrementValue());
+							break;
+						case '-':
+							instructions.add(new DecrementValue());
+							break;
+						case '>':
+							instructions.add(new IncrementPointer());
+							break;
+						case '<':
+							instructions.add(new DecrementPointer());
+							break;
+						case '[':
+							instructions.add(new OpenBracket());
+							break;
+						case ']':
+							instructions.add(new CloseBracket());
+							break;
+						default:
+							break;
+					}
+				}
+				continue;
+			}
+			
 			String[] tokens = line.trim().split("\\s+");
 			
 			if (tokens.length == 0) {

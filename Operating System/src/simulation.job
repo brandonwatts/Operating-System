@@ -1,0 +1,7 @@
+LOAD windowmanager.program 0
+LOAD wordprocessor.program 64
+LOAD wordprocessor.program 64
+LOAD wordprocessor.program 64
+LOAD game.program 256
+LOAD game.program 1024
+EXE

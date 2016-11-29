@@ -7,16 +7,17 @@ import os.Process;
 import os.ProcessState;
 
 public class IODevice implements Interrupter {
+	private int counter = 25;
+	
 	public void execute() {
-		if (ThreadLocalRandom.current().nextInt(0, 4) == 0) {
+		if (counter-- <= 0) {
 			OperatingSystem.cpu.signalInterrupt(this);
+			counter = ThreadLocalRandom.current().nextInt(20, 25);
 		}
 	}
 	
 	@Override
 	public void interrupt() {
-		System.out.println("IODevice Interrupt");
-		
 		Process process = OperatingSystem.scheduler.nextIO();
 		
 		if (process != null) {
