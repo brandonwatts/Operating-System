@@ -69,4 +69,9 @@ public class TaskManager extends JFrame {
         amountOfUsedMemory.setText(Integer.toString(OperatingSystem.memory.getUsedMemory()));
     }
 
+    public static void updateTaskManager(){
+        ((ProcessTableModel)OperatingSystem.taskManager.getTable().getModel()).fireTableDataChanged();
+
+    }
+
 }

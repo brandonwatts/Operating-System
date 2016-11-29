@@ -1,7 +1,7 @@
 package os.instruction;
 
 import os.OperatingSystem;
-import os.Tasks;
+import os.ui.TaskManager;
 
 public class Calculate implements Instruction {
 	
@@ -17,7 +17,7 @@ public class Calculate implements Instruction {
 		
 		if (time-- <= 0) {
 			OperatingSystem.cpu.registers[OperatingSystem.INSTRUCTION_REGISTER]++;
-			Tasks.updateTaskManager();
+			TaskManager.updateTaskManager();
 		}
 	}
 	

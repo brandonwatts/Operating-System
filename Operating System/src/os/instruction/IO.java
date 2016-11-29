@@ -3,7 +3,7 @@ package os.instruction;
 import os.OperatingSystem;
 import os.Process;
 import os.ProcessState;
-import os.Tasks;
+import os.ui.TaskManager;
 
 public class IO implements Instruction {
 	@Override
@@ -22,7 +22,7 @@ public class IO implements Instruction {
 		
 		OperatingSystem.scheduler.readyQueue.remove(process);
 		OperatingSystem.scheduler.ioQueue.add(process);
-		Tasks.updateTaskManager();
+		TaskManager.updateTaskManager();
 	}
 	
 	@Override

@@ -2,7 +2,6 @@ package os.instruction;
 
 import os.OperatingSystem;
 import os.Process;
-import os.Tasks;
 
 public class Exit implements Instruction {
 	@Override
@@ -14,7 +13,7 @@ public class Exit implements Instruction {
 		OperatingSystem.scheduler.remove(process);
 		OperatingSystem.cpu.registers[OperatingSystem.PROCESS_ID_REGISTER] = -1;
 		
-		Tasks.refreshStats();
+		OperatingSystem.taskManager.refreshStatistics();
 		OperatingSystem.taskManager.removeFromModel(process);
 		
 	}

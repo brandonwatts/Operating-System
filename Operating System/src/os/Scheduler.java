@@ -27,7 +27,7 @@ public class Scheduler {
                 Process process = new Process(data, identifier);
 				
                 OperatingSystem.taskManager.addToModel(process);
-                Tasks.refreshStats();
+                OperatingSystem.taskManager.refreshStatistics();
                 readyQueue.add(process);
                 addedProcesses.add(data);
 				

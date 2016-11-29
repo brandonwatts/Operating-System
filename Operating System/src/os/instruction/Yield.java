@@ -1,13 +1,13 @@
 package os.instruction;
 
 import os.OperatingSystem;
-import os.Tasks;
+import os.ui.TaskManager;
 
 public class Yield implements Instruction {
 	@Override
 	public void execute() {
 		OperatingSystem.cpu.registers[OperatingSystem.INSTRUCTION_REGISTER]++;
-		Tasks.updateTaskManager();
+		TaskManager.updateTaskManager();
 	}
 	
 	@Override
