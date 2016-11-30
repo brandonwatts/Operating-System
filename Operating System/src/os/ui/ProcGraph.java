@@ -28,7 +28,7 @@ public class ProcGraph extends JFrame {
     public ProcGraph(final String title) {
 
         super(title);
-        series = new TimeSeries("Memory", Millisecond.class);
+        series = new TimeSeries("Number of Processes", Millisecond.class);
         final TimeSeriesCollection dataset = new TimeSeriesCollection(series);
         final JFreeChart chart = createChart(dataset);
 
