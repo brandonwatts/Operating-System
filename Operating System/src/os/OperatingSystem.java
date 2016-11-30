@@ -1,9 +1,13 @@
 package os;
 
+import org.jfree.ui.RefineryUtilities;
+import os.ui.MemoryGraph;
+import os.ui.ProcGraph;
 import os.ui.Prompt;
 import os.ui.TaskManager;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class OperatingSystem {
 	// must be divisible by the page size
@@ -27,7 +31,8 @@ public class OperatingSystem {
     public static Scheduler scheduler;
 	public static IODevice device;
 	public static HardDrive hardDrive;
-	
+	public static MemoryGraph memoryGraph;
+    public static ProcGraph procGraph;
     public static Prompt prompt;
     public static TaskManager taskManager;
     private static ArrayList<String> commandQueue;
@@ -38,16 +43,13 @@ public class OperatingSystem {
         dispatcher = new Dispatcher();
         memory = new Memory();
         scheduler = new Scheduler();
-		device = new IODevice();
-		hardDrive = new HardDrive();
-		
+        device = new IODevice();
+        hardDrive = new HardDrive();
         prompt = new Prompt();
         taskManager = new TaskManager();
         commandQueue = new ArrayList<>();
-    }
-
-    public static ArrayList<String> getCommandQueue() {
-        return commandQueue;
+        memoryGraph = new MemoryGraph("Memory Useage");
+        procGraph = new ProcGraph("Number of Processes");
     }
 
     public static void execute() {
@@ -56,6 +58,8 @@ public class OperatingSystem {
         clock.execute();
 		device.execute();
     }
+
+    public static ArrayList<String> getCommandQueue(){return commandQueue;}
 
     public static void process(String input) {
         String[] tokens = input.trim().split("\\s+");
@@ -95,11 +99,23 @@ public class OperatingSystem {
                 break;
 
             case "HELP":
-                prompt.append("The List of availible commands are: proc, mem, load, exe, reset, and exit" + "\n");
+                prompt.append("The List of availible commands are: proc, mem, load, exe, reset, tskmgr, memgraph and exit" + "\n");
                 break;
 
             case "TSKMGR":
                 taskManager.setVisible(true);
+                break;
+
+            case "MEMGRAPH":
+                memoryGraph.pack();
+                RefineryUtilities.centerFrameOnScreen(memoryGraph);
+                memoryGraph.setVisible(true);
+                break;
+
+            case "PROCGRAPH":
+                procGraph.pack();
+                RefineryUtilities.centerFrameOnScreen(procGraph);
+                procGraph.setVisible(true);
                 break;
 
             default:
