@@ -10,7 +10,7 @@ public class Print implements Instruction {
 		if (data == null) {
 			data = new Integer(0);
 		}
-		System.out.print((char) (int) data);
+		OperatingSystem.prompt.append((char) (int) data);
 	}
 	
 	@Override
