@@ -7,32 +7,34 @@ The project can be run through the given jar file. On startup, there will be a "
 
 The other commands are load, exe, and reset. The command load will load a given program or job file into the operating system. If you're loading a job file, simpling add the job file's name on the same line after the load command. However, for a program file, you must include another argument after the file name, which is the clock cycle after which you want the program to be loaded into the operating system. The exe command will run the operating system for a single clock cycle, and if enter an integer value after the exe command, it will run for however many clock cycles you entered. Finally, the reset command will reset the operating system back to its starting state.
 
-List of commands:
+# List of commands:
 
 proc, mem, load, exe, reset, tskmgr, memgraph
 
-Example usage:
+# Example usage:
 
-tskmgr
-memgraph
-load simulation.job
-exe
-exe
-exe
-proc
-mem
-exe 50
-exe 50
-exe 50
-proc
-load wordprocessor.program 0
-load game.program 200
-exe 25
-exe 25
-proc
-exe 25
-exe 25
-proc
+    tskmgr
+    memgraph
+    load simulation.job
+    exe
+    exe
+    exe
+    proc
+    mem
+    exe 50
+    exe 50
+    exe 50
+    proc
+    load wordprocessor.program 0
+    load game.program 200
+    exe 25
+    exe 25
+    proc
+    exe 25
+    exe 25
+    proc
+
+# Operating System Design Overview
 
 When a process is loaded into the operating system, enough contiguous pages are allocated to the process in order to satisfy it memory requirments. The instructions for the process are also loaded into the start of the memory given to the process. After having been loaded into the operating system, a process will be scheduled using round robin scheduling with a quantum of 10 cycles. If a process executes an IO instruction it will be be put into a waiting queue, waiting until the IO device sends an interrupt to the CPU, at which point, the process will return to the ready state and eventually be chosen by the scheduler. After a process terminates, its memory will be marked as free by the system and allocated to new processes as need be.
 
